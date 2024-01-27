@@ -7,4 +7,12 @@ echo "**** DEBUG from inside the container"
 export
 echo "---- END -----"
 
+echo "---- mounted filesystems"
+mount
+echo "----- end"
+
+echo "++++ triggering event"
+cat "$GITHUB_EVENT_PATH"
+echo "+++++ END"
+
 echo "time=$time" >> $GITHUB_OUTPUT
