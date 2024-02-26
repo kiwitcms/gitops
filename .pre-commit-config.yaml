@@ -13,3 +13,13 @@ repos:
     rev: 23.12.1
     hooks:
       - id: black
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: v3.1.0
+    hooks:
+      - id: pylint
