@@ -60,6 +60,7 @@ jobs:
         run: |
           git diff
           sudo rm -rf mega-linter.log megalinter-reports/
+          git checkout .github/workflows/
 
       # Create pull request if applicable (for now works only on PR from same repository, not from forks)
       - name: Create Pull Request with applied fixes
