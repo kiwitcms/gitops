@@ -52,6 +52,11 @@ jobs:
             megalinter-reports
             mega-linter.log
 
+      - name: git diff
+        if: steps.ml.outputs.has_updated_sources == 1
+        run: |
+          git diff
+
       # Create pull request if applicable (for now works only on PR from same repository, not from forks)
       - name: Create Pull Request with applied fixes
         id: cpr
