@@ -15,10 +15,8 @@ echo "++++ triggering event"
 cat "$GITHUB_EVENT_PATH"
 echo "+++++ END"
 
-
 echo "++++ list $GITHUB_WORKSPACE"
 ls -laR "$GITHUB_WORKSPACE"
 echo "+++++ END"
 
-
-echo "time=$time" >> "$GITHUB_OUTPUT"
+echo "time=$time" >>"$GITHUB_OUTPUT"
