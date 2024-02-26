@@ -22,6 +22,9 @@ jobs:
   build:
     name: MegaLinter
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
     steps:
       # Git Checkout
       - name: Checkout Code
