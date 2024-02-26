@@ -21,4 +21,4 @@ ls -laR "$GITHUB_WORKSPACE"
 echo "+++++ END"
 
 
-echo "time=$time" >> $GITHUB_OUTPUT
+echo "time=$time" >> "$GITHUB_OUTPUT"
