@@ -6,5 +6,12 @@ flake8:
 pylint:
 	pylint --module-naming-style=any app/*.py
 
-.PHONY: check
-check: flake8 pylint
+.PHONY: test
+test: flake8 pylint
+
+.PHONY: all
+all: test
+
+.PHONY: clean
+clean:
+	@true
