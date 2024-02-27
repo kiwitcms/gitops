@@ -1,0 +1,5 @@
+-r app/requirements.txt
+
+pylint
+flake8
+black
