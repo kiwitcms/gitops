@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+"""
+Entrypoint for the kiwitcms/gitops application!
+This is meant to be executed as a command line application inside a
+pull request!
+
+Copyright (c) 2024 Alexander Todorov <atodorov@otb.bg>
+
+Licensed under the AGPL-3.0: https://www.gnu.org/licenses/agpl-3.0.html
+"""
+
+print("Hello World")
