@@ -26,6 +26,9 @@ from app.version import __version__
 def main():
     click.echo("Hello from main()!")
 
+    import pprint
+    click.echo(pprint.pformat(dict(os.environ)))
+
 
 @main.command()
 def git():
