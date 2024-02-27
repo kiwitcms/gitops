@@ -27,6 +27,7 @@ def main():
     click.echo("Hello from main()!")
 
     import pprint
+
     click.echo(pprint.pformat(dict(os.environ)))
 
 
