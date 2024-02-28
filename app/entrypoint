@@ -4,12 +4,12 @@
 Entrypoint for the kiwitcms/gitops application!
 This is meant to be executed as a command line application inside a
 pull request!
-
-Copyright (c) 2024 Alexander Todorov <atodorov@otb.bg>
-
-Licensed under the AGPL-3.0: https://www.gnu.org/licenses/agpl-3.0.html
 """
-
+#
+# Copyright (c) 2024 Alexander Todorov <atodorov@otb.bg>
+#
+# Licensed under the AGPL-3.0: https://www.gnu.org/licenses/agpl-3.0.html
+#
 import os
 import sys
 
@@ -19,16 +19,22 @@ sys.path.append(root_path)
 import click
 import sentry_sdk
 
+from app import event
 from app.version import __version__
 
 
 @click.group(invoke_without_command=True)
 def main():
-    click.echo("Hello from main()!")
+    click.echo("Hello from main() function!")
 
     import pprint
 
+    click.echo("==== ENVIRONMENT ====")
     click.echo(pprint.pformat(dict(os.environ)))
+
+    trigger_event = event.load()
+    click.echo("===== TRIGGER EVENT ====")
+    click.echo(pprint.pformat(trigger_event.payload))
 
 
 @main.command()
@@ -42,7 +48,6 @@ if __name__ == "__main__":
         enable_tracing=False,
         release=__version__,
     )
-
     # TODO: parse github.event JSON and call main() with a list of arguments
     # based on what we should do or the contents of a PR comment
     main()
