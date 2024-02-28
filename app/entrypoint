@@ -19,10 +19,12 @@ sys.path.append(root_path)
 import click
 import sentry_sdk
 
+from app.analytics import analyze
 from app import event
 from app.version import __version__
 
 
+@analyze("main")
 def main():
     click.echo("Hello from main() function!")
 

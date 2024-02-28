@@ -1,6 +1,7 @@
 """
 Utility functions!
 """
+
 #
 # Copyright (c) 2024 Alexander Todorov <atodorov@otb.bg>
 #
