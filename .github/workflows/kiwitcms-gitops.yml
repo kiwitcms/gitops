@@ -12,13 +12,6 @@ jobs:
     if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - name: DEBUG
-        run: |
-            echo "---- event ----"
-            echo ${{ github.event }}
-            echo "---- comment ---"
-            echo ${{ github.event.issue_comment }}
-
       - uses: actions/checkout@v4
 
       - name: Execute kiwitcms/gitops
