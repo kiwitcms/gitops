@@ -1,7 +1,7 @@
 FROM alpine:3.19
 
 RUN apk --no-cache upgrade && \
-    apk --no-cache add py3-pip && \
+    apk --no-cache add github-cli py3-pip && \
     rm -rf /var/cache/apk/*
 RUN /usr/bin/python3 -m venv /opt/venv && \
     mkdir /opt/app && \
