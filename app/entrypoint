@@ -23,7 +23,6 @@ from app import event
 from app.version import __version__
 
 
-@click.group(invoke_without_command=True)
 def main():
     click.echo("Hello from main() function!")
 
@@ -35,11 +34,21 @@ def main():
     trigger_event = event.load()
     click.echo("===== TRIGGER EVENT ====")
     click.echo(pprint.pformat(trigger_event.payload))
+    click.echo("===================")
+
+    # TODO: parse github.event JSON and call cli() with a list of arguments
+    # based on what we should do or the contents of a PR comment
+    cli(sys.argv[1:])
 
 
-@main.command()
-def git():
-    click.echo("this is the git sub-command")
+@click.group(invoke_without_command=True)
+def cli():
+    pass
+
+
+@cli.command()
+def help():
+    click.echo(cli.get_help(click.get_current_context()))
 
 
 if __name__ == "__main__":
@@ -48,6 +57,4 @@ if __name__ == "__main__":
         enable_tracing=False,
         release=__version__,
     )
-    # TODO: parse github.event JSON and call main() with a list of arguments
-    # based on what we should do or the contents of a PR comment
     main()
