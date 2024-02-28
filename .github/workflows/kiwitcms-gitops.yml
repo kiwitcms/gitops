@@ -1,7 +1,6 @@
 name: kiwitcms/gitops
 
 on:
-  pull_request:
   issue_comment:
     types: [created]
 
@@ -9,7 +8,7 @@ permissions: read-all
 
 jobs:
   on-pr-comment:
-    if: ${{ github.event.issue.pull_request }}
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '@kiwitcms')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
