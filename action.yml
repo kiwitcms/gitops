@@ -18,7 +18,7 @@ inputs:
   anonymous-analytics:
     description: >
       Anonymous analytics via Plausible.io.
-    default: 'true'
+    default: "true"
 
 runs:
   using: "docker"
