@@ -4,7 +4,9 @@ flake8:
 
 .PHONY: pylint
 pylint:
-	pylint --module-naming-style=any app/*.py
+	pylint --module-naming-style=any \
+	       --disable missing-class-docstring,too-few-public-methods \
+	       app/*.py
 
 .PHONY: test
 test: flake8 pylint
