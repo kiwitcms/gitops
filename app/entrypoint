@@ -49,7 +49,7 @@ def main():
     # trigger_event.payload["issue"]["number"]
     # /usr/bin/gh pr checkout https://github.com/kiwitcms/gitops/pull/16
 
-    cli(trigger_event.argv[1:])
+    cli(trigger_event.argv[1:], prog_name="kiwitcms/gitops")
 
 
 @click.group(invoke_without_command=True)
