@@ -69,16 +69,12 @@ def main():
 @click.pass_context
 def cli(ctx):
     ctx.obj = __trigger__
-    click.echo("DEBUG: from the cli() function")
-    click.echo(f"trigger={ctx.obj}")
 
 
 @cli.command()
 @click.pass_context
 @analyze("help")
 def help(ctx):
-    click.echo("DEBUG: from the help() function")
-    click.echo(f"trigger={ctx.obj}")
     click.echo(cli.get_help(ctx))
     ctx.obj.quote_reply(cli.get_help(ctx))
 
