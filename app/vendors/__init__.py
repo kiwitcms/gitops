@@ -20,7 +20,7 @@ class TriggerEvent:
     classes.
     """
 
-    argv = []
+    args = []
     private = True
 
     def __init__(self, file_path):

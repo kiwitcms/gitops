@@ -40,22 +40,22 @@ def main():
         click.echo("===================")
 
         click.echo("===== ARGUMENTS ====")
-        click.echo(trigger_event.argv)
+        click.echo(trigger_event.args)
         click.echo("=================")
 
     # /use/bin/gh repo clone trigger_event["repository"]["clone_url"] .
     # trigger_event.payload["issue"]["number"]
     # /usr/bin/gh pr checkout https://github.com/kiwitcms/gitops/pull/16
 
-    if not trigger_event.argv[0].startswith("@kiwitcms"):
+    if not trigger_event.args[0].startswith("@kiwitcms"):
         return
 
-    cli(trigger_event.argv[1:], prog_name="kiwitcms/gitops")
+    cli(trigger_event.args[1:], prog_name="kiwitcms/gitops")
 
 
 @click.group(
     invoke_without_command=True,
-    context_settings = {"ignore_unknown_options": True, "allow_extra_args": True},
+    context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
 )
 @click.pass_context
 def cli(ctx):
