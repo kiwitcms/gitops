@@ -11,6 +11,7 @@ Anonymous analytics via Plausible.io
 import os
 from http import HTTPStatus
 
+import click
 import requests
 from app.utils import strtobool
 from app.version import __version__
@@ -42,6 +43,8 @@ def post(event_id):
     run_id - str or int - individual run id needed to count unique events
     """
     if not strtobool(os.environ.get("INPUT_ANONYMOUS-ANALYTICS", "true")):
+        if strtobool(os.environ.get("INPUT_DEBUG", "false")):
+            click.echo(f"INFO: Anonymous analytics has been disabled for /{event_id}")
         return
 
     run_id = os.environ["GITHUB_RUN_ID"]
@@ -69,3 +72,6 @@ def post(event_id):
         raise RuntimeError(
             f"Plausible.io returned {response.status_code} with \n {response.text}"
         )
+
+    if strtobool(os.environ.get("INPUT_DEBUG", "false")):
+        click.echo(f"INFO: Analytics for /{event_id}: {response.text}")
