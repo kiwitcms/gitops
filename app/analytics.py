@@ -44,8 +44,8 @@ def post(event_id):
     if not strtobool(os.environ.get("INPUT_ANONYMOUS-ANALYTICS", "true")):
         return
 
-    run_id = os.environ.get("GITHUB_RUN_ID", 0)
-    referrer = os.environ.get("GITHUB_SERVER_URL", "https://example.com")
+    run_id = os.environ["GITHUB_RUN_ID"]
+    referrer = os.environ["GITHUB_SERVER_URL"]
 
     response = requests.post(
         "https://plausible.io/api/event",
