@@ -9,6 +9,7 @@ Anonymous analytics via Plausible.io
 #
 
 import os
+from functools import wraps
 from http import HTTPStatus
 
 import click
@@ -24,6 +25,7 @@ def analyze(event_id):
     """
 
     def decorator(function):
+        @wraps(function)
         def wrapper(*args, **kwargs):
             post(event_id)
 
