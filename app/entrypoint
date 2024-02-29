@@ -53,9 +53,14 @@ def main():
     cli(trigger_event.argv[1:], prog_name="kiwitcms/gitops")
 
 
-@click.group(invoke_without_command=True)
-def cli():
-    pass
+@click.group(
+    invoke_without_command=True,
+    context_settings = {"ignore_unknown_options": True, "allow_extra_args": True},
+)
+@click.pass_context
+def cli(ctx):
+    click.echo("DEBUG: from the cli() function")
+    click.echo(f"Extra args: {ctx.args}")
 
 
 @cli.command()
