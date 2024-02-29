@@ -51,7 +51,7 @@ class GitHubEvent(TriggerEvent):
                 self.payload["comment"],
                 completed=True,
             )
-            self.comment.create_reaction("rocket")
+            self.comment.create_reaction("eyes")
             return self.comment.body.strip().split()
 
         raise RuntimeError("unrecognized command argument")
