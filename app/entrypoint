@@ -27,8 +27,6 @@ from app.version import __version__
 
 @analyze("main")
 def main():
-    click.echo("Hello from main() function!")
-
     trigger_event = event.load()
 
     if strtobool(os.environ.get("INPUT_DEBUG", "false")):
@@ -48,6 +46,9 @@ def main():
     # /use/bin/gh repo clone trigger_event["repository"]["clone_url"] .
     # trigger_event.payload["issue"]["number"]
     # /usr/bin/gh pr checkout https://github.com/kiwitcms/gitops/pull/16
+
+    if not trigger_event.argv[0].startswith("@kiwitcms"):
+        return
 
     cli(trigger_event.argv[1:], prog_name="kiwitcms/gitops")
 
