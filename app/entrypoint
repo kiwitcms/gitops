@@ -2,8 +2,8 @@
 
 """
 Entrypoint for the kiwitcms/gitops application!
-This is meant to be executed as a command line application inside a
-pull request!
+This is meant to be executed as a command line application triggered
+via a pull request comment!
 """
 #
 # Copyright (c) 2024 Alexander Todorov <atodorov@otb.bg>
@@ -21,6 +21,7 @@ import sentry_sdk
 
 from app.analytics import analyze
 from app import event
+from app.utils import strtobool
 from app.version import __version__
 
 
@@ -28,15 +29,17 @@ from app.version import __version__
 def main():
     click.echo("Hello from main() function!")
 
-    import pprint
-
-    click.echo("==== ENVIRONMENT ====")
-    click.echo(pprint.pformat(dict(os.environ)))
-
     trigger_event = event.load()
-    click.echo("===== TRIGGER EVENT ====")
-    click.echo(pprint.pformat(trigger_event.payload))
-    click.echo("===================")
+
+    if strtobool(os.environ.get("INPUT_DEBUG", "false")):
+        import pprint
+
+        click.echo("==== ENVIRONMENT ====")
+        click.echo(pprint.pformat(dict(os.environ)))
+
+        click.echo("===== TRIGGER EVENT ====")
+        click.echo(pprint.pformat(trigger_event.payload))
+        click.echo("===================")
 
     # /use/bin/gh repo clone trigger_event["repository"]["clone_url"] .
     # trigger_event.payload["issue"]["number"]
@@ -52,6 +55,7 @@ def cli():
     pass
 
 
+@analyze("help")
 @cli.command()
 def help():
     click.echo(cli.get_help(click.get_current_context()))
