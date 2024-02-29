@@ -52,12 +52,12 @@ class GitHubEvent(TriggerEvent):
                 self.payload["comment"],
                 completed=True,
             )
-            self.react_with("eyes")
+            self.create_reaction("eyes")
             return self.comment.body.strip().split()
 
         raise RuntimeError("unrecognized command argument")
 
-    def react_with(self, reaction):
+    def create_reaction(self, reaction):
         self.comment.create_reaction(reaction)
 
     def quote_reply(self, text):
@@ -68,3 +68,4 @@ class GitHubEvent(TriggerEvent):
 ```"""
 
         self.pr.as_issue().create_comment(response)
+        self.create_reaction("+1")
