@@ -43,8 +43,12 @@ def main():
         click.echo(trigger_event.args)
         click.echo("=================")
 
+        click.echo("===== Issue ====")
+        click.echo(trigger_event.pr)
+        click.echo("=================")
+
     # /use/bin/gh repo clone trigger_event["repository"]["clone_url"] .
-    # trigger_event.payload["issue"]["number"]
+    # trigger_event.pr.number
     # /usr/bin/gh pr checkout https://github.com/kiwitcms/gitops/pull/16
 
     if not trigger_event.args[0].startswith("@kiwitcms"):

@@ -12,8 +12,6 @@ GitHub specific functionality!
 import os
 
 import github
-import github.Auth
-import github.IssueComment
 from app.vendors import TriggerEvent
 
 
@@ -33,6 +31,13 @@ class GitHubEvent(TriggerEvent):
                 "See https://kiwitcms.org/#subscriptions for running against private repositories!"
             )
 
+        self.pr = github.PullRequest.PullRequest(
+            self.api._Github__requester,  # pylint: disable=protected-access
+            {},
+            self.payload["issue"],
+            completed=False,
+        )
+
     @property
     def private(self):
         return self.payload["repository"]["private"]
@@ -46,6 +51,7 @@ class GitHubEvent(TriggerEvent):
                 self.payload["comment"],
                 completed=True,
             )
+            self.comment.create_reaction("rocket")
             return self.comment.body.strip().split()
 
         raise RuntimeError("unrecognized command argument")
