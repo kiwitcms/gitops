@@ -19,6 +19,10 @@ inputs:
     description: >
       Anonymous analytics via Plausible.io.
     default: "true"
+  debug:
+    description: >
+      Log debugging information
+    default: "false"
 
 runs:
   using: "docker"
