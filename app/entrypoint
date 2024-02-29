@@ -62,12 +62,9 @@ def main():
     context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
 )
 @click.pass_context
-@click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def cli(ctx, args):
-    ctx.args = args
-
-    if strtobool(os.environ.get("INPUT_DEBUG", "false")):
-        click.echo(f"DEBUG: cli() args: {ctx.args}")
+def cli(ctx):
+    click.echo("DEBUG: from the cli() function")
+    click.echo(f"Extra args: {ctx.args}")
 
 
 @cli.command()
