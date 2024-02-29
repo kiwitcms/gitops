@@ -80,6 +80,7 @@ def help(ctx):
     click.echo("DEBUG: from the help() function")
     click.echo(f"trigger={ctx.obj}")
     click.echo(cli.get_help(ctx))
+    ctx.obj.quote_reply(cli.get_help(ctx))
 
 
 if __name__ == "__main__":
