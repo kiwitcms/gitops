@@ -11,6 +11,10 @@ Load payload from GitHub, GitLab, Azure DevOps, etc
 import json
 import os
 
+import github
+import github.Auth
+import github.IssueComment
+
 
 def load():
     """
@@ -33,6 +37,15 @@ class TriggerEvent:
 class GitHubEvent(TriggerEvent):
     def __init__(self, file_path):
         super().__init__(file_path)
+
+        self.api = github.Github(
+            auth=github.Auth.Token(os.environ["INPUT_TOKEN"]),
+            base_url=os.environ["GITHUB_API_URL"],
+        )
+        self.comment = github.IssueComment.IssueComment(
+            self.api._Github__requester, {}, self.payload["comment"], completed=True
+        )
+
         self.private = self.payload["repository"]["private"]
 
         if self.private:
