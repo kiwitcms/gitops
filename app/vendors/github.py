@@ -38,7 +38,7 @@ class GitHubEvent(TriggerEvent):
         return self.payload["repository"]["private"]
 
     @property
-    def argv(self):
+    def args(self):
         if "comment" in self.payload:
             self.comment = github.IssueComment.IssueComment(
                 self.api._Github__requester,  # pylint: disable=protected-access
