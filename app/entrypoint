@@ -37,6 +37,9 @@ def main():
         click.echo("==== ENVIRONMENT ====")
         click.echo(pprint.pformat(dict(os.environ)))
 
+        click.echo(trigger_event.comment)
+        click.echo(trigger_event.comment.body)
+
         click.echo("===== TRIGGER EVENT ====")
         click.echo(pprint.pformat(trigger_event.payload))
         click.echo("===================")
