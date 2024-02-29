@@ -31,12 +31,13 @@ class GitHubEvent(TriggerEvent):
                 "See https://kiwitcms.org/#subscriptions for running against private repositories!"
             )
 
-        self.pr = github.PullRequest.PullRequest(
+        self.repository = github.Repository.Repository(
             self.api._Github__requester,  # pylint: disable=protected-access
             {},
-            self.payload["issue"],
+            self.payload["repository"],
             completed=False,
         )
+        self.pr = self.repository.get_pull(self.payload["issue"]["number"])
 
     @property
     def private(self):
@@ -62,9 +63,8 @@ class GitHubEvent(TriggerEvent):
     def quote_reply(self, text):
         response = f"""> {self.comment.body}
 
-        ```
-        {text}
-        ```
-        """
+```
+{text}
+```"""
 
-        self.pr.create_comment(response)
+        self.pr.as_issue().create_comment(response)
