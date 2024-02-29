@@ -37,20 +37,19 @@ def main():
         click.echo("==== ENVIRONMENT ====")
         click.echo(pprint.pformat(dict(os.environ)))
 
-        click.echo(trigger_event.comment)
-        click.echo(trigger_event.comment.body)
-
         click.echo("===== TRIGGER EVENT ====")
         click.echo(pprint.pformat(trigger_event.payload))
         click.echo("===================")
+
+        click.echo("===== ARGUMENTS ====")
+        click.echo(trigger_event.argv)
+        click.echo("=================")
 
     # /use/bin/gh repo clone trigger_event["repository"]["clone_url"] .
     # trigger_event.payload["issue"]["number"]
     # /usr/bin/gh pr checkout https://github.com/kiwitcms/gitops/pull/16
 
-    # TODO: parse github.event JSON and call cli() with a list of arguments
-    # based on what we should do or the contents of a PR comment
-    cli(sys.argv[1:])
+    cli(trigger_event.argv[1:])
 
 
 @click.group(invoke_without_command=True)
