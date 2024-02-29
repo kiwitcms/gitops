@@ -20,14 +20,14 @@ import click
 import sentry_sdk
 
 from app.analytics import analyze
-from app import event
+from app import events
 from app.utils import strtobool
 from app.version import __version__
 
 
 @analyze("main")
 def main():
-    trigger_event = event.load()
+    trigger_event = events.load()
 
     if strtobool(os.environ.get("INPUT_DEBUG", "false")):
         import pprint
