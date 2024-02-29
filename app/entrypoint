@@ -25,9 +25,14 @@ from app.utils import strtobool
 from app.version import __version__
 
 
+__trigger__ = None
+
+
 @analyze("main")
 def main():
-    trigger_event = events.load()
+    global __trigger__
+
+    __trigger__ = events.load()
 
     if strtobool(os.environ.get("INPUT_DEBUG", "false")):
         import pprint
@@ -36,25 +41,25 @@ def main():
         click.echo(pprint.pformat(dict(os.environ)))
 
         click.echo("===== TRIGGER EVENT ====")
-        click.echo(pprint.pformat(trigger_event.payload))
+        click.echo(pprint.pformat(__trigger__.payload))
         click.echo("===================")
 
         click.echo("===== ARGUMENTS ====")
-        click.echo(trigger_event.args)
+        click.echo(__trigger__.args)
         click.echo("=================")
 
         click.echo("===== Issue ====")
-        click.echo(trigger_event.pr)
+        click.echo(__trigger__.pr)
         click.echo("=================")
 
-    # /use/bin/gh repo clone trigger_event["repository"]["clone_url"] .
-    # trigger_event.pr.number
+    # /use/bin/gh repo clone __trigger__["repository"]["clone_url"] .
+    # __trigger__.pr.number
     # /usr/bin/gh pr checkout https://github.com/kiwitcms/gitops/pull/16
 
-    if not trigger_event.args[0].startswith("@kiwitcms"):
+    if not __trigger__.args[0].startswith("@kiwitcms"):
         return
 
-    cli(trigger_event.args[1:], prog_name="kiwitcms/gitops")
+    cli(__trigger__.args[1:], prog_name="kiwitcms/gitops")
 
 
 @click.group(
@@ -63,14 +68,18 @@ def main():
 )
 @click.pass_context
 def cli(ctx):
+    ctx.obj = __trigger__
     click.echo("DEBUG: from the cli() function")
-    click.echo(f"Extra args: {ctx.args}")
+    click.echo(f"trigger={ctx.obj}")
 
 
 @cli.command()
+@click.pass_context
 @analyze("help")
-def help():
-    click.echo(cli.get_help(click.get_current_context()))
+def help(ctx):
+    click.echo("DEBUG: from the help() function")
+    click.echo(f"trigger={ctx.obj}")
+    click.echo(cli.get_help(ctx))
 
 
 if __name__ == "__main__":
