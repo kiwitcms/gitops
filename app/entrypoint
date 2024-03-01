@@ -51,7 +51,13 @@ def main():
     if not __trigger__.args[0].startswith("@kiwitcms"):
         return
 
-    cli(__trigger__.args[1:], prog_name="kiwitcms/gitops")
+    cli_args = __trigger__.args[1:]
+
+    # turn these flags into a command otherwise context manager isn't used
+    if cli_args[0] in ("--debug", "-h", "--help", "--usage"):
+        cli_args[0] = "help"
+
+    cli(cli_args, prog_name="kiwitcms/gitops")
 
 
 @click.group(
