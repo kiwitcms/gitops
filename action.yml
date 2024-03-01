@@ -23,6 +23,10 @@ inputs:
     description: >
       Log debugging information
     default: "false"
+  reply-to-comments:
+    description: >
+      Post command output as replies to comments triggering this action
+    default: "true"
 
 runs:
   using: "docker"

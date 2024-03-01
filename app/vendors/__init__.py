@@ -11,6 +11,10 @@ somewhat defined interface!
 #
 
 import json
+import os
+
+import click
+from app.utils import strtobool
 
 
 class TriggerEvent:
@@ -27,6 +31,7 @@ class TriggerEvent:
         "end-success": "+1",
         "end-failure": "-1",
     }
+    stdout = []
 
     def __init__(self, file_path):
         with open(file_path, "r", encoding="utf-8") as event_file:
@@ -49,5 +54,12 @@ class TriggerEvent:
         """
         Executed when processing of a command ends
         """
-        # todo: self.quote_reply() & determine pass/fail
+        for line in self.stdout:
+            click.echo(line)
+
+        if strtobool(os.environ.get("INPUT_REPLY-TO-COMMENTS", "true")):
+            self.quote_reply("\n".join(self.stdout))
+        self.stdout = []
+
+        # TODO: pass or fail
         self.create_reaction(self.reactions["end-success"])

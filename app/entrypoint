@@ -67,10 +67,7 @@ def cli(ctx):
 @click.pass_context
 @analyze("help")
 def help(ctx):
-    output = cli.get_help(ctx)
-
-    click.echo(output)
-    ctx.obj.quote_reply(output)
+    ctx.obj.stdout.append(cli.get_help(ctx))
 
 
 if __name__ == "__main__":
