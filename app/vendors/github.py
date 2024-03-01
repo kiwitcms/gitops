@@ -52,7 +52,6 @@ class GitHubEvent(TriggerEvent):
                 self.payload["comment"],
                 completed=True,
             )
-            self.create_reaction("eyes")
             return self.comment.body.strip().split()
 
         raise RuntimeError("unrecognized command argument")
@@ -68,4 +67,3 @@ class GitHubEvent(TriggerEvent):
 ```"""
 
         self.pr.as_issue().create_comment(response)
-        self.create_reaction("+1")

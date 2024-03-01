@@ -22,6 +22,11 @@ class TriggerEvent:
 
     args = []
     private = True
+    reactions = {
+        "begin": "eyes",
+        "end-success": "+1",
+        "end-failure": "-1",
+    }
 
     def __init__(self, file_path):
         with open(file_path, "r", encoding="utf-8") as event_file:
@@ -32,3 +37,17 @@ class TriggerEvent:
 
     def quote_reply(self, text):
         raise NotImplementedError
+
+    def __enter__(self):
+        """
+        Executed when processing of a command begins
+        """
+        self.create_reaction(self.reactions["begin"])
+        return self
+
+    def __exit__(self, exc_type, exc_value, tb):
+        """
+        Executed when processing of a command ends
+        """
+        # todo: self.quote_reply() & determine pass/fail
+        self.create_reaction(self.reactions["end-success"])

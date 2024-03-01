@@ -68,15 +68,17 @@ def main():
 )
 @click.pass_context
 def cli(ctx):
-    ctx.obj = __trigger__
+    ctx.obj = ctx.with_resource(__trigger__)
 
 
 @cli.command()
 @click.pass_context
 @analyze("help")
 def help(ctx):
-    click.echo(cli.get_help(ctx))
-    ctx.obj.quote_reply(cli.get_help(ctx))
+    output = cli.get_help(ctx)
+
+    click.echo(output)
+    ctx.obj.quote_reply(output)
 
 
 if __name__ == "__main__":
