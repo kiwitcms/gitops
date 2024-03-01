@@ -44,14 +44,6 @@ def main():
         click.echo(pprint.pformat(__trigger__.payload))
         click.echo("===================")
 
-        click.echo("===== ARGUMENTS ====")
-        click.echo(__trigger__.args)
-        click.echo("=================")
-
-        click.echo("===== Issue ====")
-        click.echo(__trigger__.pr)
-        click.echo("=================")
-
     # /use/bin/gh repo clone __trigger__["repository"]["clone_url"] .
     # __trigger__.pr.number
     # /usr/bin/gh pr checkout https://github.com/kiwitcms/gitops/pull/16
