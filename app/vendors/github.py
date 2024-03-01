@@ -52,7 +52,7 @@ class GitHubEvent(TriggerEvent):
                 self.payload["comment"],
                 completed=True,
             )
-            return self.comment.body.strip().split()
+            return self.comment.body.strip().lower().split()
 
         raise RuntimeError("unrecognized command argument")
 
