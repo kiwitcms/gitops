@@ -28,6 +28,30 @@ from app.version import __version__
 __trigger__ = None
 
 
+class AppContext(click.Context):
+    """
+    Will try to respond back to a triggering comment even when such comment
+    contains an invalid command!
+    """
+
+    def fail(self, message):
+        global __trigger__
+
+        handler = self.obj
+        if not handler:
+            handler = __trigger__
+
+        if handler:
+            handler.stdout.append(message)
+            handler.__exit__(click.exceptions.UsageError, None, None)
+
+        super().fail(message)
+
+
+class AppCommand(click.Group):
+    context_class = AppContext
+
+
 @analyze("main")
 def main():
     global __trigger__
@@ -60,7 +84,8 @@ def main():
     cli(cli_args, prog_name="kiwitcms/gitops")
 
 
-@click.group(
+@click.command(
+    cls=AppCommand,
     invoke_without_command=True,
     context_settings={"ignore_unknown_options": True, "allow_extra_args": True},
 )

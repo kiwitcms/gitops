@@ -61,5 +61,7 @@ class TriggerEvent:
             self.quote_reply("\n".join(self.stdout))
         self.stdout = []
 
-        # TODO: pass or fail
-        self.create_reaction(self.reactions["end-success"])
+        if exc_type or exc_value or tb:
+            self.create_reaction(self.reactions["end-failure"])
+        else:
+            self.create_reaction(self.reactions["end-success"])
