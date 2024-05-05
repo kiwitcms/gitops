@@ -42,14 +42,14 @@ def post(event_id):
 
     event_id - str - similar to a page URL, e.g. `pull_request_comment`
     referrer - str - e.g. https://github.com
-    run_id - str or int - individual run id needed to count unique events
+    actor_id - str or int - account ID which triggered the event
     """
     if not strtobool(os.environ.get("INPUT_ANONYMOUS-ANALYTICS", "true")):
         if strtobool(os.environ.get("INPUT_DEBUG", "false")):
             click.echo(f"INFO: Anonymous analytics has been disabled for /{event_id}")
         return
 
-    run_id = os.environ["GITHUB_RUN_ID"]
+    actor_id = os.environ["GITHUB_ACTOR_ID"]
     referrer = os.environ["GITHUB_SERVER_URL"]
 
     response = requests.post(
@@ -64,7 +64,7 @@ def post(event_id):
             },
         },
         headers={
-            "User-Agent": f"kiwitcms-gitops/{__version__}.{run_id}",
+            "User-Agent": f"kiwitcms-gitops/{__version__}.{actor_id}",
             "Content-Type": "application/json",
         },
         timeout=10,
