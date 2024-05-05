@@ -50,7 +50,10 @@ def post(event_id):
         return
 
     actor_id = os.environ["GITHUB_ACTOR_ID"]
-    referrer = os.environ["GITHUB_SERVER_URL"]
+    referrer = (
+        os.environ["GITHUB_SERVER_URL"] + "/" + os.environ["GITHUB_REPOSITORY_OWNER"]
+    )
+    ip_address = requests.get("https://ifconfig.me", timeout=5).text
 
     response = requests.post(
         "https://plausible.io/api/event",
@@ -65,6 +68,7 @@ def post(event_id):
         },
         headers={
             "User-Agent": f"kiwitcms-gitops/{__version__}.{actor_id}",
+            "X-Forwarded-For": ip_address,
             "Content-Type": "application/json",
         },
         timeout=10,
