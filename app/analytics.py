@@ -81,3 +81,5 @@ def post(event_id):
 
     if strtobool(os.environ.get("INPUT_DEBUG", "false")):
         click.echo(f"INFO: Analytics for /{event_id}: {response.text}")
+        click.echo(response.headers)
+        click.echo("===== end =====")
