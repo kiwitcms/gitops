@@ -10,6 +10,7 @@ Anonymous analytics via Plausible.io
 
 import os
 from functools import wraps
+from hashlib import sha256
 from http import HTTPStatus
 
 import click
@@ -49,11 +50,23 @@ def post(event_id):
             click.echo(f"INFO: Anonymous analytics has been disabled for /{event_id}")
         return
 
-    actor_id = os.environ["GITHUB_ACTOR_ID"]
+    # this is unique b/c the IP address is fixed. Both together represent
+    # a unique user ID for Plausible
+    actor_id = int.from_bytes(
+        sha256(
+            os.environ.get("GITHUB_TRIGGERING_ACTOR", "").encode(),
+            usedforsecurity=False,
+        ).digest()
+    )
     referrer = (
         os.environ["GITHUB_SERVER_URL"] + "/" + os.environ["GITHUB_REPOSITORY_OWNER"]
     )
-    ip_address = requests.get("https://ifconfig.me", timeout=5).text
+
+    # Plausible.io rejects GitHub's original IP address b/c it is listed as a
+    # datacenter address and we don't have information about the actual address of the
+    # user who triggered our application. Instead just use a public address that
+    # isn't going to be rejected
+    ip_address = "176.12.5.83"
 
     response = requests.post(
         "https://plausible.io/api/event",
@@ -67,7 +80,7 @@ def post(event_id):
             },
         },
         headers={
-            "User-Agent": f"kiwitcms-gitops/{__version__}.{actor_id}",
+            "User-Agent": f"kiwitcms-gitops/{actor_id}",
             "X-Forwarded-For": ip_address,
             "Content-Type": "application/json",
         },
