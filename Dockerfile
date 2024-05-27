@@ -1,4 +1,4 @@
-FROM alpine:3.19 as runtime-base
+FROM alpine:3.20 as runtime-base
 
 RUN apk --no-cache upgrade && \
     apk --no-cache add github-cli python3 && \
