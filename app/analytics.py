@@ -58,9 +58,9 @@ def post(event_id):
             usedforsecurity=False,
         ).digest()
     )
-    referrer = (
-        os.environ["GITHUB_SERVER_URL"] + "/" + os.environ["GITHUB_REPOSITORY_OWNER"]
-    )
+
+    # Record only the domain name, not any specific paths
+    referrer = os.environ["GITHUB_SERVER_URL"]
 
     # Plausible.io rejects GitHub's original IP address b/c it is listed as a
     # datacenter address and we don't have information about the actual address of the
