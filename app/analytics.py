@@ -55,7 +55,7 @@ def post(event_id, duration_in_secs):
             click.echo(f"INFO: Anonymous analytics has been disabled for /{event_id}")
         return
 
-    # this is unique b/c the IP address is fixed. Both together represent
+    # this has to be unique b/c the IP address is fixed. Both together represent
     # a unique user ID for Plausible
     actor_id = int.from_bytes(
         sha256(
