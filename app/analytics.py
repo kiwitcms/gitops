@@ -28,9 +28,11 @@ def analyze(event_id):
     def decorator(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
-            post(event_id)
+            result = function(*args, **kwargs)
 
-            return function(*args, **kwargs)
+            # record the analytics *after* a function is done
+            post(event_id)
+            return result
 
         return wrapper
 
