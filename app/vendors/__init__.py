@@ -14,7 +14,6 @@ import json
 import os
 
 import click
-from app.analytics import analyze
 from app.utils import strtobool
 
 
@@ -51,7 +50,6 @@ class TriggerEvent:
         self.create_reaction(self.reactions["begin"])
         return self
 
-    @analyze("goodbye")
     def __exit__(self, exc_type, exc_value, tb):
         """
         Executed when processing of a command ends
