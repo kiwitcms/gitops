@@ -9,6 +9,7 @@ Anonymous analytics via Plausible.io
 #
 
 import os
+import math
 import time
 
 from functools import wraps
@@ -32,7 +33,7 @@ def analyze(event_id):
         def wrapper(*args, **kwargs):
             start = time.time()
             result = function(*args, **kwargs)
-            duration_in_secs = round(time.time() - start)
+            duration_in_secs = math.ceil(time.time() - start)
 
             # record the analytics *after* a function is done
             post(event_id, duration_in_secs)
