@@ -9,6 +9,8 @@ Anonymous analytics via Plausible.io
 #
 
 import os
+import time
+
 from functools import wraps
 from hashlib import sha256
 from http import HTTPStatus
@@ -28,10 +30,12 @@ def analyze(event_id):
     def decorator(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
+            start = time.time()
             result = function(*args, **kwargs)
+            duration_in_secs = round(time.time() - start)
 
             # record the analytics *after* a function is done
-            post(event_id)
+            post(event_id, duration_in_secs)
             return result
 
         return wrapper
@@ -39,13 +43,12 @@ def analyze(event_id):
     return decorator
 
 
-def post(event_id):
+def post(event_id, duration_in_secs):
     """
     Collect anonymous analytics via Plausible.io
 
     event_id - str - similar to a page URL, e.g. `pull_request_comment`
-    referrer - str - e.g. https://github.com
-    actor_id - str or int - account ID which triggered the event
+    duration_in_secs - int - rounded up duration of this event
     """
     if not strtobool(os.environ.get("INPUT_ANONYMOUS-ANALYTICS", "true")):
         if strtobool(os.environ.get("INPUT_DEBUG", "false")):
@@ -78,6 +81,7 @@ def post(event_id):
             "referrer": referrer,
             "domain": "kiwitcms-gitops",
             "props": {
+                "duration": duration_in_secs,
                 "version": __version__,
             },
         },
