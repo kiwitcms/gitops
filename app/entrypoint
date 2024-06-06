@@ -52,7 +52,6 @@ class AppCommand(click.Group):
     context_class = AppContext
 
 
-@analyze("")
 def main():
     global __trigger__
 
