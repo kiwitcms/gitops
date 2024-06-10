@@ -15,6 +15,16 @@ import os
 
 import click
 from app.utils import strtobool
+from tcms_api.xmlrpc import TCMSXmlrpc
+
+
+class AnonymousRpc(TCMSXmlrpc):  # pylint: disable=too-few-public-methods
+    def _do_login(self):
+        pass
+
+
+def anonymous_rpc_client(url):
+    return AnonymousRpc(None, None, url).server
 
 
 class TriggerEvent:
@@ -31,6 +41,7 @@ class TriggerEvent:
         "end-success": "+1",
         "end-failure": "-1",
     }
+    rpc = anonymous_rpc_client("https://public.tenant.kiwitcms.org/xml-rpc/")
     stdout = []
 
     def __init__(self, file_path):
@@ -65,3 +76,6 @@ class TriggerEvent:
             self.create_reaction(self.reactions["end-failure"])
         else:
             self.create_reaction(self.reactions["end-success"])
+
+    def can_run(self, repository_url):
+        return self.rpc.GitOps.allow(repository_url)
