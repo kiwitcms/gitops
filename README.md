@@ -1,6 +1,6 @@
 # kiwitcms/gitops
 
-Your development & testing swiss-army tool by [Kiwi TCMS](https://kiwitcms.org)!
+Your git productivity tools by [Kiwi TCMS](https://kiwitcms.org)!
 Free to use on public repositories, see <https://kiwitcms.org/#subscriptions> for
 usage in private repositories!
 
