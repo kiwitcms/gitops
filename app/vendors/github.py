@@ -26,7 +26,10 @@ class GitHubEvent(TriggerEvent):
             base_url=os.environ["GITHUB_API_URL"],
         )
 
-        if self.private:
+        if (
+            os.environ.get("GITHUB_SERVER_URL", "") != "https://github.com"
+            or self.private
+        ) and not self.can_run(self.payload["repository"]["html_url"]):
             raise RuntimeError(
                 "See https://kiwitcms.org/#subscriptions for running against private repositories!"
             )
