@@ -58,6 +58,11 @@ def main():
 
     __trigger__ = events.load()
 
+    # will be used by anonymous analytics
+    os.environ["_APP_REPOSITORY_TYPE"] = "public"
+    if __trigger__.private:
+        os.environ["_APP_REPOSITORY_TYPE"] = "private"
+
     if strtobool(os.environ.get("INPUT_DEBUG", "false")):
         import pprint
 
