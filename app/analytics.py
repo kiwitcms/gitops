@@ -82,7 +82,7 @@ def post(event_id, duration_in_secs):
             "props": {
                 "duration": duration_in_secs,
                 "version": __version__,
-                "repository_type": os.environ.get("_APP_REPOSITORY_TYPE")
+                "repository_type": os.environ.get("_APP_REPOSITORY_TYPE"),
             },
         },
         headers={
