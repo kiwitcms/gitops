@@ -1,5 +1,5 @@
 PyGithub==2.3.0
 click==8.1.7
 requests==2.32.3
-sentry-sdk==2.5.1
+sentry-sdk==2.7.1
 tcms-api==13.3
