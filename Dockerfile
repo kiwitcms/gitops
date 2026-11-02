@@ -3,7 +3,7 @@
 # Licensed under GNU Affero General Public License v3 or later (AGPLv3+)
 # https://www.gnu.org/licenses/agpl-3.0.html
 
-FROM alpine:3.20 as runtime-base
+FROM alpine:3.24 as runtime-base
 
 RUN apk --no-cache upgrade && \
     apk --no-cache add github-cli python3 && \
