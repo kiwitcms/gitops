@@ -11,6 +11,6 @@ jobs:
     if: github.event.issue.pull_request && startsWith(github.event.comment.body, '@kiwitcms')
     # checkov:skip:CKV2_GHA_1:Action needs to write back comments & PRs
     permissions: write-all
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: kiwitcms/gitops@v0.0.1
