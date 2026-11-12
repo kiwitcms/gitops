@@ -6,7 +6,8 @@ name: MegaLinter
 on:
   pull_request:
 
-permissions: read-all
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
